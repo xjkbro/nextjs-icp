@@ -26,11 +26,11 @@ export default function Home({ products }) {
         <div className={styles.grid}>
           {products.data &&
             products.data.map((item) => (
-              <Link href={`/products/${item.attributes.slug}`} key={item.attributes.slug}>
+              <Link href={`/products/${item?.attributes?.slug}`} key={item?.attributes?.slug}>
                 <a>
-                  <h2>{item.attributes.title}</h2>
+                  <h2>{item?.attributes?.title}</h2>
                   {/* {console.log(item)} */}
-                  <p>{item.attributes.description}</p>
+                  <p>{item?.attributes?.description}</p>
                 </a>
               </Link>
             ))}
