@@ -4,7 +4,7 @@ import Image from "next/image"
 const LoadImage = (props) => {
     // console.log(props)
   if (!props.media) {
-    return <Image {...props} />
+    return <Image alt="default" {...props} />
     // return <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
   }
   const { url, alternativeText, width, height } = props.media.attributes
