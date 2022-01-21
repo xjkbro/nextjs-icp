@@ -1,5 +1,5 @@
 // const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337/';
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://testing.icpdas-usa.com/';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://testing.icpdas-usa.com/';
 /**
  * Given an image, return the URL
  * @param {any} image

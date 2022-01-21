@@ -1,6 +1,6 @@
 export function getStrapiURL(path) {
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://testing.icpdas-usa.com"
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://testing.icpdas-usa.com"
   }${path}`;
 }
 

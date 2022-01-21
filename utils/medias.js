@@ -9,6 +9,6 @@ export function getStrapiMedia(url) {
   }
   // Otherwise prepend the URL path with the Strapi URL
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://testing.icpdas-usa.com"
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://testing.icpdas-usa.com"
   }${url}`;
 }
