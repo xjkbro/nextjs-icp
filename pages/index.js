@@ -3,6 +3,9 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
+import { fromImageToUrl } from "../utils/urls";
+import { truncateString } from "../utils/main";
+
 export default function Home({ products }) {
   console.log(products);
   return (
@@ -28,9 +31,10 @@ export default function Home({ products }) {
             products.data.map((item) => (
               <Link href={`/products/${item?.attributes?.slug}`} key={item?.attributes?.slug}>
                 <a>
+                    <Image src={fromImageToUrl(item?.attributes?.product_imgs?.data[0]?.attributes)} alt="product image" height="100" width="100"></Image>
                   <h2>{item?.attributes?.title}</h2>
                   {/* {console.log(item)} */}
-                  <p>{item?.attributes?.description}</p>
+                  <p>{truncateString(item?.attributes?.description, 240)}</p>
                 </a>
               </Link>
             ))}
@@ -54,7 +58,7 @@ export default function Home({ products }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch("https://testing.icpdas-usa.com/api/products");
+  const res = await fetch("https://testing.icpdas-usa.com/api/products?populate=product_imgs");
   const products = await res.json();
 
   console.log(products);
