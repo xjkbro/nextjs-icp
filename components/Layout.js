@@ -16,7 +16,8 @@ const Layout = ({ children, categories, libraries}) => {
       <div
         hidden
         id="snipcart"
-        data-api-key="ODhhNWUxOGEtNTk0OC00OTQwLWJkOWMtM2M1ZmNjODU1ZDJhNjM3MzMyNzM0NjM1OTMyNjcz"
+        data-config-modal-style="side" 
+        data-api-key="NTUyOWExN2QtY2Q4Mi00M2YwLWJlYjgtYWQwZWExZmM4ZWM0NjM3Nzg0MDA1Mjg3ODgzMzg1"
       />
     </div>
   )
