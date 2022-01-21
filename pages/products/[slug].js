@@ -1,53 +1,83 @@
-import Link from "next/link";
-import Image from "next/image";
+import Head from "next/head"
+import { useRouter } from "next/router"
 
-export default function Product({ product }) {
-    console.log(product)
+import LoadImage from "../../components/LoadImage"
+import { getProducts, getProduct } from "../../utils/api"
+import { getStrapiMedia } from "../../utils/medias"
+
+const ProductPage = ({ product }) => {
+  const router = useRouter()
+  if (router.isFallback) {
+    return <div>Loading product...</div>
+  }
+
   return (
-    <div>
-      <Link href="/">
-        <a>Go Home</a>
-      </Link>
-      <h2>{product?.attributes?.title}</h2>
-      <p>
-        <div>Description</div>
-        <div>{product?.attributes?.description}</div>
-      </p>
-      <p>
-        <div>Specification</div>
-        <div dangerouslySetInnerHTML={{ __html: product?.attributes?.specifications }}></div>
-      </p>
-      
-      <Image src={`https://testing.icpdas-usa.com${product?.attributes?.product_imgs?.data[0]?.attributes?.url}`} alt="Vercel Logo" width={100} height={100} />
+    <div className="m-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-8">
+      <Head>
+        <title>{product.attributes.title} product</title>
+      </Head>
+      <div className="rounded-t-lg pt-2 pb-2 m-auto h-40 w-40">
+        <LoadImage media={product?.attributes?.product_imgs?.data[0]} />
+      </div>
+      <div className="w-full p-5 flex flex-col justify-between">
+        <div>
+          <h4 className="mt-1 font-semibold text-lg leading-tight truncate text-gray-700">
+            {product.attributes.title} - ${product.attributes.price}
+          </h4>
+          <div className="mt-1 text-gray-600">{product.attributes.description}</div>
+        </div>
+
+        {product.attributes.status === "published" ? (
+          <button
+            className="snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow"
+            data-item-id={product.id}
+            data-item-price={product.attributes.price}
+            data-item-url={router.asPath}
+            data-item-description={product.attributes.description}
+            data-item-image={getStrapiMedia(
+              product?.image?.formats?.thumbnail?.url
+            )}
+            data-item-name={product.attributes.title}
+            v-bind="customFields"
+          >
+            Add to cart
+          </button>
+        ) : (
+          <div className="text-center mr-10 mb-1" v-else>
+            <div
+              className="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+              role="alert"
+            >
+              <span className="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">
+                Coming soon...
+              </span>
+              <span className="font-semibold mr-2 text-left flex-auto">
+                This article is not available yet.
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
-  );
+  )
 }
 
-// tell next.js how many products there are
-export async function getStaticPaths() {
-  const res = await fetch("https://testing.icpdas-usa.com/api/products");
-  const products = await res.json();
+export default ProductPage
 
-  const paths = products.data.map((product) => ({
-    params: { slug: product.attributes?.slug, id: product?.id },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-// for each individual page: get the data for that page
 export async function getStaticProps({ params }) {
-  const { slug, id } = params;
-
-  const res = await fetch(`https://testing.icpdas-usa.com/api/products?filters[slug][$eq]=${slug}&populate=product_imgs`);
-  const data = await res.json();
-  const product = data.data[0];
+  const product = await getProduct(params.slug)
 //   console.log(product)
+  return { props: { product } }
+}
 
+export async function getStaticPaths() {
+  const products = await getProducts()
   return {
-    props: { product },
-  };
+    paths: products.map((_product) => {
+      return {
+        params: { slug: _product.attributes.slug },
+      }
+    }),
+    fallback: true,
+  }
 }
