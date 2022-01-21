@@ -21,12 +21,13 @@
 // for reference, might need in future for more complex queries
 
 export function getStrapiURL(path) {
-    if(path.indexOf('/') != 0){
-        return path;
-    }else{
-  return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://testing.icpdas-usa.com"
-  }${path}`;}
+  if (path.indexOf("/") != 0) {
+    return path
+  } else {
+    return `${
+      process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://testing.icpdas-usa.com"
+    }${path}`
+  }
 }
 
 // Helper to make GET requests to Strapi
