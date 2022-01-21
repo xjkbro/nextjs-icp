@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Product({ product }) {
-    // console.log(product)
+    console.log(product)
   return (
     <div>
       <Link href="/">
@@ -16,6 +17,8 @@ export default function Product({ product }) {
         <div>Specification</div>
         <div dangerouslySetInnerHTML={{ __html: product?.attributes?.specifications }}></div>
       </p>
+      
+      <Image src={`https://testing.icpdas-usa.com${product?.attributes?.product_imgs?.data[0]?.attributes?.url}`} alt="Vercel Logo" width={100} height={100} />
     </div>
   );
 }
@@ -39,7 +42,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug, id } = params;
 
-  const res = await fetch(`https://testing.icpdas-usa.com/api/products?filters[slug][$eq]=${slug}`);
+  const res = await fetch(`https://testing.icpdas-usa.com/api/products?filters[slug][$eq]=${slug}&populate=product_imgs`);
   const data = await res.json();
   const product = data.data[0];
 //   console.log(product)
