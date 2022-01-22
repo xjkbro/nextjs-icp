@@ -20,7 +20,8 @@ export default function handler(req, res) {
     } else {
       if (province === "CA") {
         let resRate = getRate(postalCode)
-        let resAmount = calculateTax(resRate, total)
+        let resAmount = calculateTax(resRate, itemsTotal)
+        console.log(resRate, resAmount)
         res.status(200).json({
           taxes: [
             {
@@ -73,7 +74,7 @@ const getRate = (zip) => {
   return taxes[index].EstimatedCombinedRate
 }
 const calculateTax = (rate, total) => {
-  return total * parseFloat(rate)
+  return (total * parseFloat(rate)).toFixed(2)
 }
 
 const taxes = [
