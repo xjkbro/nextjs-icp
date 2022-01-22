@@ -2,7 +2,7 @@
 
 const CSVToJSON = require('csvtojson');
 export default function handler(req, res) {
-    CSVToJSON().fromFile('./TAXRATES.csv')
+    CSVToJSON().fromFile('https://nextjs-icp.vercel.app/TAXRATES.csv')
     .then(taxes => {
         res.status(200).json({
             taxes
