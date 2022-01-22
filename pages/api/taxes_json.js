@@ -74,7 +74,7 @@ const getRate = (zip) => {
   return taxes[index].EstimatedCombinedRate
 }
 const calculateTax = (rate, total) => {
-  return (total * parseFloat(rate)).toFixed(2)
+  return parseFloat((total * parseFloat(rate)).toFixed(2))
 }
 
 const taxes = [
