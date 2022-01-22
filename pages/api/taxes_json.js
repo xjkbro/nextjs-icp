@@ -5,7 +5,8 @@ export default function handler(req, res) {
   if (req.method === "POST") {
     // Process a POST request
     // console.log(req.body)
-    let { country, province, postalCode } = req.body.content.shippingAddress
+    let { country, province, postalCode } = req.body.content.shippingAddress;
+    let { itemsTotal } = req.body.content;
     if (country != "US") {
       res.status(200).json({
         taxes: [
@@ -18,14 +19,15 @@ export default function handler(req, res) {
       })
     } else {
       if (province === "CA") {
-        console.log("here")
+          let resRate = getRate(postalCode);
+          let resAmount = calculateTax(resRate,total);
         res.status(200).json({
           taxes: [
             {
               name: "California Tax",
-              //   amount: 10.0,
+                amount: resAmount,
               numberForInvoice: "CA-TAX",
-              rate: getRate(postalCode),
+              rate: resRate,
             },
           ],
         })
@@ -69,6 +71,9 @@ const getRate = (zip) => {
   let index = binarySearch(taxes, zip)
   //   console.log(index)
   return taxes[index].EstimatedCombinedRate
+}
+const calculateTax = (rate,total) = {
+    return total * parseFloat(rate);
 }
 
 const taxes = [
