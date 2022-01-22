@@ -2,7 +2,7 @@
 
 const CSVToJSON = require('csvtojson');
 export default function handler(req, res) {
-    CSVToJSON().fromFile('TAXRATES.csv')
+    CSVToJSON().fromFile('./TAXRATES.csv')
     .then(taxes => {
         res.status(200).json({
             taxes
