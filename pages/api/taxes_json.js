@@ -10,16 +10,9 @@ export default function handler(req, res) {
       res.status(200).json({
         taxes: [
           {
-            name: "Tax1",
-            amount: 10.0,
-            numberForInvoice: "TAX-001",
-            rate: 0.05,
-          },
-          {
-            name: "Tax2",
-            amount: 20.0,
-            numberForInvoice: "TAX-002",
-            rate: 0.1,
+            name: "No Tax",
+            amount: 0,
+            numberForInvoice: "NO-TAX",
           },
         ],
       })
@@ -29,9 +22,9 @@ export default function handler(req, res) {
         res.status(200).json({
           taxes: [
             {
-              name: "Tax1",
-              amount: 10.0,
-              numberForInvoice: "TAX-001",
+              name: "California Tax",
+              //   amount: 10.0,
+              numberForInvoice: "CA-TAX",
               rate: getRate(postalCode),
             },
           ],
@@ -40,16 +33,9 @@ export default function handler(req, res) {
         res.status(200).json({
           taxes: [
             {
-              name: "Tax1",
-              amount: 10.0,
-              numberForInvoice: "TAX-001",
-              rate: 0.05,
-            },
-            {
-              name: "Tax2",
-              amount: 20.0,
-              numberForInvoice: "TAX-002",
-              rate: 0.1,
+              name: "No Tax",
+              amount: 0,
+              numberForInvoice: "NO-TAX",
             },
           ],
         })
