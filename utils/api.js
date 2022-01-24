@@ -25,7 +25,8 @@ export function getStrapiURL(path) {
     return path
   } else {
     return `${
-      process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://testing.icpdas-usa.com"
+      process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+      "https://www.testing.icpdas-usa.com"
     }${path}`
   }
 }
@@ -37,7 +38,10 @@ export async function fetchAPI(path) {
   const data = await response.json()
   return data
 }
-
+/**
+ * FETCH Categories
+ * @returns
+ */
 export async function getCategories() {
   const categories = await fetchAPI("/api/categories")
   return categories.data
@@ -49,7 +53,10 @@ export async function getCategory(slug) {
   )
   return categories?.data?.[0]
 }
-
+/**
+ * FETCH Libraries
+ * @returns
+ */
 export async function getLibraries() {
   const libraries = await fetchAPI(
     "/api/libraries?populate[media_source][populate]=*"
@@ -67,7 +74,10 @@ export async function getLibraryMediaSourceBySlug(slug) {
   )
   return libraries?.data?.[0]
 }
-
+/**
+ * FETCH Products
+ * @returns
+ */
 export async function getProducts() {
   const products = await fetchAPI("/api/products?populate=product_imgs")
   return products.data
@@ -84,6 +94,14 @@ export async function getProductsFromCategory(slug) {
   const products = await fetchAPI(
     `/api/products?filters[categories][slug][$eq]=${slug}&populate=product_imgs`
   )
-  console.log(products)
+  // console.log(products)
   return products.data
+}
+/**
+ * FETCH Orders
+ * @returns
+ */
+export async function getOrders() {
+  const orders = await fetchAPI("/api/orders")
+  return orders.data
 }

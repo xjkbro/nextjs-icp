@@ -17,33 +17,38 @@ const ProductPage = ({ product }) => {
         <title>{product.attributes.title} product</title>
       </Head>
       <div className="rounded-t-lg pt-2 pb-2 m-auto h-40 w-40">
-        <LoadImage media={product?.attributes?.product_imgs?.data[0]} />
+        <LoadImage
+          media={product?.attributes?.product_imgs?.data[0]}
+          size="medium"
+        />
       </div>
       <div className="w-full p-5 flex flex-col justify-between">
         <div>
           <h4 className="mt-1 font-semibold text-lg leading-tight truncate text-gray-700">
             {product.attributes.title} - ${product.attributes.price}
           </h4>
-          <div className="mt-1 text-gray-600">{product.attributes.description}</div>
+          <div className="mt-1 text-gray-600">
+            {product.attributes.description}
+          </div>
         </div>
 
         {/* {product.attributes.status === "published" ? ( */}
-          <button
-            className="snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow"
-            data-item-id={product.id}
-            data-item-price={product.attributes.price}
-            data-item-url={router.asPath}
-            data-item-description={product.attributes.description}
-            data-item-image={getStrapiMedia(
-              product?.image?.formats?.thumbnail?.url
-            )}
-            data-item-name={product.attributes.title}
-            v-bind="customFields"
-          >
-            Add to cart
-          </button>
+        <button
+          className="snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow"
+          data-item-id={product.id}
+          data-item-price={product.attributes.price}
+          data-item-url={router.asPath}
+          data-item-description={product.attributes.description}
+          data-item-image={getStrapiMedia(
+            product?.image?.formats?.thumbnail?.url
+          )}
+          data-item-name={product.attributes.title}
+          v-bind="customFields"
+        >
+          Add to cart
+        </button>
         {/* ) : ( */}
-          {/* <div className="text-center mr-10 mb-1" v-else>
+        {/* <div className="text-center mr-10 mb-1" v-else>
             <div
               className="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
               role="alert"
@@ -66,7 +71,7 @@ export default ProductPage
 
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.slug)
-//   console.log(product)
+  //   console.log(product)
   return { props: { product } }
 }
 

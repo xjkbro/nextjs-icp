@@ -1,8 +1,7 @@
 import LoadImage from "./LoadImage"
 import Link from "next/link"
 
-import {truncateString} from "../utils/format"
-
+import { truncateString } from "../utils/format"
 
 const ProductsList = ({ products }) => {
   return (
@@ -16,7 +15,9 @@ const ProductsList = ({ products }) => {
             <a>
               <div className="w-full bg-white">
                 <div className="rounded-t-lg pt-2 pb-2 w-1/2 mx-auto">
-                  <LoadImage media={_product?.attributes?.product_imgs?.data[0]} />
+                  <LoadImage
+                    media={_product?.attributes?.product_imgs?.data[0]}
+                  />
                 </div>
               </div>
               <div className="pl-4 pr-4 pb-4 pt-4 rounded-lg">
