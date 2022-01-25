@@ -63,7 +63,8 @@ const Navbar = () => {
         <LoadImage height="30" width="30" src="/cart.svg" alt="Cart" />
         <span className="snipcart-total-price ml-3 font-semibold text-sm text-indigo-500"></span>
       </button> */}
-            <Link href="/cart">Cart</Link>
+            <div className="flex items-center"><span className="mr-3 font-semibold text-sm text-indigo-500"><i className="fas fa-shopping-cart"></i> <Link href="/cart">Cart</Link></span>
+            </div>
         </div>
     )
 }

@@ -13,11 +13,15 @@ import "../styles/index.css"
 import "../styles/globals.css"
 
 import SEO from "../next-seo.config"
+import Footer from "../components/Footer"
+import Navbar from "../components/Navbar"
+import ScriptImport from "../components/ScriptImport"
+
 
 const MyApp = ({ Component, pageProps, categories, libraries }) => {
   return (
     <CartProvider>
-      {/* <AuthContext> */}
+      <Navbar/>
       <Layout categories={categories} libraries={libraries}>
         <DefaultSeo {...SEO} />
 
@@ -32,16 +36,12 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
             async
             src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"
           />
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
         </Head>
         <Component {...pageProps} />
       </Layout>
-      {/* </AuthContext> */}
-      <Script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-        strategy="beforeInteractive"
-      />
-      <Script src="/scripts/products-script.js" />
-            <Script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" />
+      <Footer />
+      <ScriptImport />
     </CartProvider>
   )
 }
