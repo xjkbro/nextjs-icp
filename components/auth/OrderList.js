@@ -31,7 +31,7 @@ const OrderList = ({ orders }) => {
             <div className="mt-1 text-sm text-gray-700">
               {item.attributes.products &&
                 item.attributes.products.data.map((product) => (
-                  <div>
+                  <div key={product.id}>
                     {product.attributes.title} for ${product.attributes.price}
                   </div>
                 ))}
