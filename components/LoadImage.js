@@ -34,6 +34,7 @@ const LoadImage = (props) => {
       height={height}
       src={url}
       alt={alternativeText || ""}
+      priority={props.priority ? true : false}
     />
   )
 }

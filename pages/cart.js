@@ -8,7 +8,7 @@ import { useContext } from "react"
 
 const Cart = ({ products }) => {
   const { items, setItems } = useContext(CartContext)
-  console.log(items)
+//   console.log(items)
   return (
     <div>
       <Head>
