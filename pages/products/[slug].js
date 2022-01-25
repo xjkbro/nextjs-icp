@@ -48,7 +48,7 @@ const ProductPage = ({ product }) => {
           </button>
         </div>
       </div>
-      {/* <div className="w-full p-5">
+      <div className="w-full p-5">
         <h3>Description</h3>
         <div
           className="mt-1 text-gray-600"
@@ -64,7 +64,7 @@ const ProductPage = ({ product }) => {
           }}
         ></div>
       </div>
-      <Script src="/scripts/products-script.js" strategy="afterInteractive" /> */}
+      <Script src="/scripts/products-script.js" strategy="afterInteractive" />
     </>
   )
 }
