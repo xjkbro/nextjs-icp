@@ -1,7 +1,8 @@
 import App from "next/app"
 import Head from "next/head"
 import Layout from "../components/Layout"
-import AuthContext from "../contexts/AuthContext"
+// import AuthContext from "../contexts/AuthContext"
+import { CartProvider } from "../contexts/CartContext"
 import { getCategories, getLibraries } from "../utils/api"
 import { DefaultSeo } from "next-seo"
 import { parseCookies } from "nookies"
@@ -15,7 +16,7 @@ import SEO from "../next-seo.config"
 
 const MyApp = ({ Component, pageProps, categories, libraries }) => {
   return (
-    <>
+    <CartProvider>
       {/* <AuthContext> */}
       <Layout categories={categories} libraries={libraries}>
         <DefaultSeo {...SEO} />
@@ -39,7 +40,7 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         strategy="beforeInteractive"
       />
-    </>
+    </CartProvider>
   )
 }
 
