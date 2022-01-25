@@ -27,22 +27,23 @@ function Login() {
 
     const loginResponse = await login.json()
     // const { id, username, email } = loginResponse.user
+    console.log(loginResponse)
     setCookie(null, "jwt", loginResponse.jwt, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-    })
-    setCookie(null, "user_id", loginResponse.user.id, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-    })
-    setCookie(null, "username", loginResponse.user.username, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-    })
-    setCookie(null, "user_email", loginResponse.user.email, {
-      maxAge: 30 * 24 * 60 * 60,
-      path: "/",
-    })
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      })
+      setCookie(null, "user_id", loginResponse.user.id, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      })
+      setCookie(null, "username", loginResponse.user.username, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      })
+      setCookie(null, "user_email", loginResponse.user.email, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      })
 
     Router.push("/")
   }

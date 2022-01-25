@@ -16,9 +16,9 @@ const Orders = ({ orders }) => {
 }
 
 export async function getServerSideProps(ctx) {
-  const jwt = parseCookies(ctx).jwt
+  const {jwt} = parseCookies(ctx)
 
-  const res = await fetch(getStrapiURL("/api/orders"), {
+  const res = await fetch(getStrapiURL("/api/orders?populate[0]=products"), {
     headers: {
       Authorization: `Bearer ${jwt}`,
     },
