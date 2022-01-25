@@ -21,8 +21,8 @@ const LoadImage = (props) => {
   //   ;({ url, width, height } = props.media.attributes.formats.thumbnail)
   // } // console.log(width, height)
 
-  const imgLoader = ({ src }) => {
-    return getStrapiMedia(src)
+  const imgLoader = ({ src, width }) => {
+    return getStrapiMedia(src, width)
   }
 
   return (
