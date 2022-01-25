@@ -28,7 +28,7 @@ const ProductPage = ({ product }) => {
                         <div>
                             <div className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4" style={{ position: 'relative' }}>
                                 <Image
-                                    src={getStrapiMedia(product?.attributes?.product_imgs.data[productImage].attributes.url)}
+                                    src={getStrapiMedia(product?.attributes?.product_imgs.data[productImage].attributes.url,0)}
                                     alt="prod img"
                                     layout="fill"
                                     objectFit='contain'
@@ -43,7 +43,7 @@ const ProductPage = ({ product }) => {
                                         <button className="ring-2 ring-indigo-300 ring-inset focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center" onClick={() => setImage(i)}>
                                             <div className="w-full h-full" style={{ position: 'relative' }}>
                                                 <Image
-                                                    src={getStrapiMedia(img.attributes.url)}
+                                                    src={getStrapiMedia(img.attributes.url,0)}
                                                     alt="prod img"
                                                     layout="fill"
                                                     objectFit='contain'
