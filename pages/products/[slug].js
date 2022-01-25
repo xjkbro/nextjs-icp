@@ -28,7 +28,7 @@ const ProductPage = ({ product }) => {
                         <div>
                             <div className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4" style={{ position: 'relative' }}>
                                 <Image
-                                    src={getStrapiMedia(product?.attributes?.product_imgs.data[productImage].attributes.url,0)}
+                                    src={"https://www.testing.icpdas-usa.com"+product?.attributes?.product_imgs.data[productImage].attributes.url}
                                     alt="prod img"
                                     layout="fill"
                                     objectFit='contain'
