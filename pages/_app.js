@@ -21,7 +21,7 @@ import ScriptImport from "../components/ScriptImport"
 const MyApp = ({ Component, pageProps, categories, libraries }) => {
   return (
     <CartProvider>
-      <Navbar/>
+      {/* <Navbar/> */}
       <Layout categories={categories} libraries={libraries}>
         <DefaultSeo {...SEO} />
 
@@ -40,7 +40,7 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
         </Head>
         <Component {...pageProps} />
       </Layout>
-      <Footer />
+      {/* <Footer /> */}
       <ScriptImport />
     </CartProvider>
   )
