@@ -12,7 +12,7 @@ const ProductsList = ({ products }) => {
           key={_product.id}
           className="border rounded-lg bg-gray-100 hover:shadow-lg shadow-md"
         >
-          <Link href={`/products/${_product.attributes.slug}`}>
+          <a href={`/products/${_product.attributes.slug}`}>
             <a>
               <div className="w-full bg-white">
                 <div className="rounded-t-lg pt-2 pb-2 w-1/2 mx-auto">
@@ -30,7 +30,7 @@ const ProductsList = ({ products }) => {
                 </div>
               </div>
             </a>
-          </Link>
+          </a>
         </div>
       ))}
     </div>

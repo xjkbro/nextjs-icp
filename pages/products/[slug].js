@@ -7,16 +7,18 @@ import Image from "next/image"
 import { getProducts, getProduct } from "../../utils/api"
 import { getStrapiMedia } from "../../utils/medias"
 import Script from "next/script"
+import styled from "styled-components"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const ProductPage = ({ product }) => {
+
     const [productImage, setImage] = useState(0)
     const router = useRouter()
     if (router.isFallback) {
         return <div>Loading product...</div>
     }
-
+    
     return (
         <>
             <Head>
@@ -28,7 +30,7 @@ const ProductPage = ({ product }) => {
                         <div>
                             <div className="h-64 md:h-80 rounded-lg bg-gray-100 mb-4" style={{ position: 'relative' }}>
                                 <Image
-                                    src={"https://www.testing.icpdas-usa.com"+product?.attributes?.product_imgs.data[productImage].attributes.url}
+                                    src={"https://www.testing.icpdas-usa.com" + product?.attributes?.product_imgs.data[productImage].attributes.url}
                                     alt="prod img"
                                     layout="fill"
                                     objectFit='contain'
@@ -43,7 +45,7 @@ const ProductPage = ({ product }) => {
                                         <button className="ring-2 ring-indigo-300 ring-inset focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center" onClick={() => setImage(i)}>
                                             <div className="w-full h-full" style={{ position: 'relative' }}>
                                                 <Image
-                                                    src={getStrapiMedia(img.attributes.url,0)}
+                                                    src={getStrapiMedia(img.attributes.url, 0)}
                                                     alt="prod img"
                                                     layout="fill"
                                                     objectFit='contain'
@@ -80,9 +82,9 @@ const ProductPage = ({ product }) => {
                             <div className="flex-1">
                                 <p className="text-green-500 text-xl font-semibold">Save 12%</p>
                                 <p className="text-gray-400 text-sm">Inclusive of all Taxes.</p>
-                                
-														{/* We ship via UPS and fastest delivery is with Next Day Air. UPS Next Day Air Early typically gets their product to them as early as 8am, Next Day Air gets their product typically there by 10:30am and Next Day Air Saver typically by 3pm. We ship same day for in stock items and the lead time is up to one week for out of stock items. Delivery is dependent on UPS and your shipping method. */}
-													
+
+                                {/* We ship via UPS and fastest delivery is with Next Day Air. UPS Next Day Air Early typically gets their product to them as early as 8am, Next Day Air gets their product typically there by 10:30am and Next Day Air Saver typically by 3pm. We ship same day for in stock items and the lead time is up to one week for out of stock items. Delivery is dependent on UPS and your shipping method. */}
+
                             </div>
                         </div>
 
@@ -134,7 +136,7 @@ const ProductPage = ({ product }) => {
                             >
                                 Add to Cart
                             </button>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -159,7 +161,7 @@ const ProductPage = ({ product }) => {
                     }}
                 ></div>
             </div>
-            
+            {/* {runFormat()} */}
         </>
     )
 }
@@ -183,6 +185,8 @@ export async function getStaticPaths() {
         fallback: true,
     }
 }
+
+
 
 // <>
 //     <div className="m-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-8">

@@ -15,6 +15,7 @@ class MyDocument extends Document {
                 <body>
                     <Main/>
                     <NextScript/>
+                    <script type="text/javascript" src="/scripts/products-script.js"></script>
                 </body>
             </Html>
         )

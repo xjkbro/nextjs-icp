@@ -32,10 +32,6 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
             rel="stylesheet"
             href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css"
           />
-          <script
-            async
-            src="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.js"
-          />
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
         </Head>
         <Component {...pageProps} />
