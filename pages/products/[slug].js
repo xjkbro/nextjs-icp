@@ -1,19 +1,24 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { marked } from "marked"
-
 import LoadImage from "../../components/LoadImage"
 import Image from "next/image"
 import { getProducts, getProduct } from "../../utils/api"
 import { getStrapiMedia } from "../../utils/medias"
 import Script from "next/script"
 import styled from "styled-components"
-
+import $ from 'jquery';
+import { tableStyles } from "../../utils/Pages/Products.js"
 import { useState, useEffect } from "react"
-
 const ProductPage = ({ product }) => {
-
-    const [productImage, setImage] = useState(0)
+    
+    /**
+     * UseEffect allows us to run jQuery scripts that need to run when document loads.
+     */
+    useEffect(() => {
+        tableStyles();  //imported product scripts
+    },[])
+    const [productImage, setImage] = useState(0);
     const router = useRouter()
     if (router.isFallback) {
         return <div>Loading product...</div>
@@ -37,10 +42,8 @@ const ProductPage = ({ product }) => {
                                     priority
                                 />
                             </div>
-
                             <div className="flex -mx-2 mb-4">
                                 {product?.attributes?.product_imgs.data.map((img, i) => (
-
                                     <div key={img.id} className="flex-1 px-2">
                                         <button className="ring-2 ring-indigo-300 ring-inset focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center" onClick={() => setImage(i)}>
                                             <div className="w-full h-full" style={{ position: 'relative' }}>
@@ -54,10 +57,7 @@ const ProductPage = ({ product }) => {
                                             </div>
                                         </button>
                                     </div>
-
                                 ))}
-
-
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,6 @@ const ProductPage = ({ product }) => {
                                 ICPDAS USA Inc
                             </a>
                         </p>
-
                         <div className="flex items-center space-x-4 my-4">
                             <div>
                                 <div className="rounded-lg bg-gray-100 flex py-2 px-3">
@@ -82,16 +81,12 @@ const ProductPage = ({ product }) => {
                             <div className="flex-1">
                                 <p className="text-green-500 text-xl font-semibold">Save 12%</p>
                                 <p className="text-gray-400 text-sm">Inclusive of all Taxes.</p>
-
                                 {/* We ship via UPS and fastest delivery is with Next Day Air. UPS Next Day Air Early typically gets their product to them as early as 8am, Next Day Air gets their product typically there by 10:30am and Next Day Air Saver typically by 3pm. We ship same day for in stock items and the lead time is up to one week for out of stock items. Delivery is dependent on UPS and your shipping method. */}
-
                             </div>
                         </div>
-
                         <p className="text-gray-500">
                             {product.attributes.short_desc}
                         </p>
-
                         <div className="flex py-4 space-x-4">
                             <div className="relative">
                                 <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
@@ -104,7 +99,6 @@ const ProductPage = ({ product }) => {
                                     <option>4</option>
                                     <option>5</option>
                                 </select>
-
                                 {/* <svg
                                     className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
                                     xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +114,6 @@ const ProductPage = ({ product }) => {
                                     />
                                 </svg> */}
                             </div>
-
                             <button
                                 type="button"
                                 className="snipcart-add-item h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
@@ -136,7 +129,6 @@ const ProductPage = ({ product }) => {
                             >
                                 Add to Cart
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -161,19 +153,15 @@ const ProductPage = ({ product }) => {
                     }}
                 ></div>
             </div>
-            {/* {runFormat()} */}
         </>
     )
 }
-
 export default ProductPage
-
 export async function getStaticProps({ params }) {
     const product = await getProduct(params.slug)
     //   console.log(product)
     return { props: { product } }
 }
-
 export async function getStaticPaths() {
     const products = await getProducts()
     return {
@@ -185,60 +173,3 @@ export async function getStaticPaths() {
         fallback: true,
     }
 }
-
-
-
-// <>
-//     <div className="m-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 mt-8">
-//         <Head>
-//             <title>{product.attributes.title} product</title>
-//         </Head>
-//         <div className="rounded-t-lg pt-2 pb-2 m-auto h-40 w-40">
-//             <LoadImage
-//                 media={product?.attributes?.product_imgs?.data[0]}
-//                 size="medium"
-//             />
-//         </div>
-//         <div className="w-full p-5 flex flex-col justify-between">
-//             <div>
-//                 <h4 className="mt-1 font-semibold text-lg leading-tight truncate text-gray-700">
-//                     {product.attributes.title} - ${product.attributes.price}
-//                 </h4>
-//                 <div className="mt-1 text-gray-600">{product.attributes.title}</div>
-//             </div>
-//             {/* {product.attributes.status === "published" ? ( */}
-//             <button
-//                 className="snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow"
-//                 data-item-id={product.id}
-//                 data-item-price={product.attributes.price}
-//                 data-item-url={router.asPath}
-//                 data-item-description={product.attributes.title}
-//                 data-item-image={getStrapiMedia(
-//                     product?.image?.formats?.thumbnail?.url
-//                 )}
-//                 data-item-name={product.attributes.title}
-//                 v-bind="customFields"
-//             >
-//                 Add to cart
-//             </button>
-//         </div>
-//     </div>
-//     <div className="w-full p-5">
-//         <h3>Description</h3>
-//         <div
-//             className="mt-1 text-gray-600"
-//             dangerouslySetInnerHTML={{ __html: product.attributes.description }}
-//         ></div>
-//     </div>
-//     <div className="w-full p-5">
-//         <h3>Specification</h3>
-//         <div
-//             className="mt-1 text-gray-600"
-//             dangerouslySetInnerHTML={{
-//                 __html: product.attributes.specifications,
-//             }}
-//         ></div>
-//     </div>
-
-//     <Script src="/scripts/products-script.js" />
-// </>
