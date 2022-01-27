@@ -1,7 +1,7 @@
 import App from "next/app"
 import Head from "next/head"
 import Layout from "../components/Layout"
-// import AuthContext from "../contexts/AuthContext"
+import {AuthProvider} from "../contexts/AuthContext"
 import { CartProvider } from "../contexts/CartContext"
 import { getCategories, getLibraries } from "../utils/api"
 import { DefaultSeo } from "next-seo"
@@ -20,6 +20,7 @@ import ScriptImport from "../components/ScriptImport"
 
 const MyApp = ({ Component, pageProps, categories, libraries }) => {
   return (
+    <AuthProvider>
     <CartProvider>
       {/* <Navbar/> */}
       <Layout categories={categories} libraries={libraries}>
@@ -38,7 +39,9 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
       </Layout>
       {/* <Footer /> */}
       <ScriptImport />
-    </CartProvider>
+      </CartProvider>
+    </AuthProvider>
+
   )
 }
 

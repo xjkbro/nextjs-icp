@@ -1,14 +1,17 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { setCookie } from "nookies"
 // import getConfig from 'next/config'
 import Router from "next/router"
 import { getStrapiURL } from "../utils/api"
 
+import { AuthContext} from "../contexts/AuthContext"
 // const { publicRuntimeConfig } = getConfig();
 
 function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [failedLogin, setFailedLogin] = useState(false)
+  const {user, setUser} = useContext(AuthContext);
 
   async function handleLogin(event) {
     event.preventDefault()
@@ -29,23 +32,31 @@ function Login() {
     const loginResponse = await login.json()
     // const { id, username, email } = loginResponse.user
     console.log(loginResponse)
-    setCookie(null, "jwt", loginResponse.jwt, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: "/",
-      })
-      setCookie(null, "user_id", loginResponse.user.id, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: "/",
-      })
-      setCookie(null, "username", loginResponse.user.username, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: "/",
-      })
-      setCookie(null, "user_email", loginResponse.user.email, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: "/",
-      })
-
+    if(loginResponse.jwt == null) {
+        // if login credentials are wrong
+        // console.log(loginResponse.data)
+        setFailedLogin(true)
+        return
+    } else {
+        setFailedLogin(false)
+        setCookie(null, "jwt", loginResponse.jwt, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          })
+          setCookie(null, "user_id", loginResponse.user.id, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          })
+          setCookie(null, "username", loginResponse.user.username, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          })
+          setCookie(null, "user_email", loginResponse.user.email, {
+            maxAge: 30 * 24 * 60 * 60,
+            path: "/",
+          })
+          setUser(loginResponse.user)
+    }
     Router.push("/")
   }
 
@@ -57,6 +68,9 @@ function Login() {
                 <div className="text-center">
                     <h1 className="my-3 text-3xl font-semibold text-gray-700 dark:text-gray-200">Sign in</h1>
                     <p className="text-gray-500 dark:text-gray-400">Sign in to access your account</p>
+                    
+                    { failedLogin ? <p className="mt-6 text-danger-500 dark:text-danger-400">Incorrect username and password.</p> : <></>}
+
                 </div>
                 <div className="m-7">
                     <form onSubmit={handleLogin}>

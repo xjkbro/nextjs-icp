@@ -1,8 +1,20 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useContext } from "react";
+import {AuthContext} from "./AuthContext";
 
 const CartContext = createContext()
 const CartProvider = ({ children }) => {
-    const [items, setItems] = useState([{ id: 1, product: "BLE" }, { id: 2, product: "BLE" }, { id: 3, product: "BLE" },])
+    const {user, setUser} = useContext(AuthContext);
+    const [cart, setCart] = useState([])
+
+// change to useEffect
+    const updateCart = () => {
+        //updateCart
+
+        if(JSON.stringify(user) != '{}')       //if user is logged in
+            //update user field
+            return
+    }
+
     //   const refreshItems = (items) => {
     //     setItems()
     //   }
@@ -14,7 +26,7 @@ const CartProvider = ({ children }) => {
     //   }
     return (
         <CartContext.Provider
-            value={{ items, setItems }}
+            value={{ cart, setCart, updateCart}}
         >
             {children}
         </CartContext.Provider>

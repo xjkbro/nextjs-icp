@@ -2,14 +2,18 @@ import Link from "next/link"
 import LoadImage from "./LoadImage"
 import { parseCookies, destroyCookie } from "nookies"
 import Router from "next/router"
+import { AuthContext } from "../contexts/AuthContext"
+import { useContext } from "react"
 
 const Navbar = () => {
     const { user_id, username } = parseCookies()
+    const {user,setUser} = useContext(AuthContext);
     const handleLogOut = () => {
         destroyCookie(null, "jwt")
         destroyCookie(null, "user_id")
         destroyCookie(null, "username")
         destroyCookie(null, "user_email")
+        setUser({})
         Router.push("/")
     }
     const displayUser = () => {
