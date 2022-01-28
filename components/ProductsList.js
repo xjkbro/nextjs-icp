@@ -66,7 +66,7 @@ const ProductsList = ({ products }) => {
                         </div>
                         <p className="text-sm text-gray-700 mt-4">
                             {truncateString(_product.attributes.short_desc, 240)}
-                            {console.log(_product)}
+                            {/* {console.log(_product)} */}
                         </p>
                         <div className="flex items-center justify-end mt-4 top-auto">
                             <button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Compare</button>
