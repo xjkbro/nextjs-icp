@@ -3,11 +3,13 @@ import LoadImage from "./LoadImage"
 import { parseCookies, destroyCookie } from "nookies"
 import Router from "next/router"
 import { AuthContext } from "../contexts/AuthContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 
 const Navbar = () => {
     const { user_id, username } = parseCookies()
     const { user, setUser } = useContext(AuthContext);
+    const [sidebar, setSidebar] = useState(false)
+
     const handleLogOut = () => {
         destroyCookie(null, "jwt")
         destroyCookie(null, "user_id")
@@ -103,9 +105,9 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center p-6 space-x-6 ">
-                        <button className="bg-secondary-500 text-gray-200 font-bold px-6 py-6 hover:bg-secondary-400"> Cart </button>
-                        <button className="bg-secondary-500 text-gray-200 font-bold px-6 py-6 hover:bg-secondary-400"> Checkout </button>
+                    <div className="hidden lg:flex items-center p-6 space-x-6 ">
+                        <Link href="/cart"><a className="bg-secondary-500 text-gray-200 font-bold px-6 py-6 hover:bg-secondary-400"> Cart </a></Link>
+                        <Link href="/cart"><a className="bg-secondary-500 text-gray-200 font-bold px-6 py-6 hover:bg-secondary-400"> Checkout </a></Link>
                     </div>
                 </div>
             </section>
@@ -113,9 +115,9 @@ const Navbar = () => {
                 {/* NavBar */}
                 <nav className="flex justify-between bg-primary-500 text-white w-screen">
                     <div className="px-5 xl:px-12 py-4 flex w-full items-center">
-                        {/* <Link href="/"><a className="text-3xl font-bold font-heading">
-                            Logo Here.
-                        </a></Link> */}
+                        <a className="md:hidden text-gray-200 text-3xl font-semibold font-heading">
+                            DEVFLOW
+                        </a>
                         {/* NavLinks */}
                         <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
                             <li><Link href="/"><a className="hover:text-gray-400">Home</a></Link></li>
@@ -132,7 +134,7 @@ const Navbar = () => {
                                     <div className="px-3">
                                         {displayUser()}
                                     </div>
-                                    
+
                                 </a>
                             </Link>
                             <Link href="/cart">
@@ -146,17 +148,19 @@ const Navbar = () => {
                         </div>
                     </div>
                     {/* Responsive Navbar */}
-                    <a className="xl:hidden flex mr-6 items-center" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        <span className="flex absolute -mt-5 ml-4">
-                            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                    <Link href="/cart">
+                        <a className="xl:hidden flex mr-6 items-center" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span className="flex absolute -mt-5 ml-4">
+                                <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                                </span>
                             </span>
-                        </span>
-                    </a>
-                    <a className="navbar-burger self-center mr-12 xl:hidden" href="#">
+                        </a>
+                    </Link>
+                    <a className="navbar-burger self-center mr-12 xl:hidden" onClick={() => setSidebar(!sidebar)}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -164,6 +168,37 @@ const Navbar = () => {
                 </nav>
 
             </section>
+
+            {/* Sidebar */}
+            <div className={sidebar ? "" : "hidden"}>
+                <div className="bg-primary-500 fixed inset-0 opacity-50 visible" onClick={() => setSidebar(false)}>
+                </div>
+                <div className="bg-white fixed inset-y-0 py-4 right-0 w-3/4 z-10">
+                    <div className="w-full flex justify-center p-5" onClick={() => setSidebar(false)}><i className="fas fa-times-circle text-5xl text-primary-500 cursor-pointer"></i></div>
+
+                    <ul className="font-normal text-dark-500">
+                        <li>
+                            <Link href="/">
+                                <a onClick={() => setSidebar(false)} className="bg-white font-medium inline-flex items-center px-4 py-2 transition w-full hover:bg-primary-100"> <i className="fas fa-home p-3"></i>Home </a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/categories">
+                                <a onClick={() => setSidebar(false)} className="bg-white font-medium inline-flex items-center px-4 py-2 transition w-full hover:bg-primary-100"> <i className="fas fa-list p-3"></i>Categories </a>
+
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/libraries">
+                                <a onClick={() => setSidebar(false)} className="bg-white font-medium inline-flex items-center px-4 py-2 transition w-full hover:bg-primary-100"> <i className="fas fa-book p-3"></i>Libraries </a>
+
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
         </>
     )
 }
