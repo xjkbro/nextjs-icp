@@ -1,7 +1,7 @@
 import App from "next/app"
 import Head from "next/head"
 import Layout from "../components/Layout"
-import {AuthProvider} from "../contexts/AuthContext"
+import { AuthProvider } from "../contexts/AuthContext"
 import { CartProvider } from "../contexts/CartContext"
 import { getCategories, getLibraries } from "../utils/api"
 import { DefaultSeo } from "next-seo"
@@ -19,71 +19,77 @@ import ScriptImport from "../components/ScriptImport"
 
 
 const MyApp = ({ Component, pageProps, categories, libraries }) => {
-  return (
-    <AuthProvider>
-    <CartProvider>
-      {/* <Navbar/> */}
-      <Layout categories={categories} libraries={libraries}>
-        <DefaultSeo {...SEO} />
+    return (
 
-        <Head>
-          <link rel="preconnect" href="https://app.snipcart.com" />
-          <link rel="preconnect" href="https://cdn.snipcart.com" />
-          <link
-            rel="stylesheet"
-            href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css"
-          />
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-        </Head>
-        <Component {...pageProps} />
-      </Layout>
-      {/* <Footer /> */}
-      <ScriptImport />
-      </CartProvider>
-    </AuthProvider>
+        // Include necessary providers in set order
+        <AuthProvider>
+            <CartProvider>
 
-  )
+                {/* Include Layout with necessary props */}
+                <Layout categories={categories} libraries={libraries}>
+
+                    {/* Default SEO for dynamic SEO */}
+                    <DefaultSeo {...SEO} />
+                    
+                    {/* Neccessary stylesheet includes */}
+                    <Head>
+                        <link rel="preconnect" href="https://app.snipcart.com" />
+                        <link rel="preconnect" href="https://cdn.snipcart.com" />
+                        <link  rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.1/default/snipcart.css" />
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+                    </Head>
+
+                    {/* Send pageProps to Main Component */}
+                    <Component {...pageProps} />
+                </Layout>
+                
+                {/* Include any script tags needed. */}
+                <ScriptImport />
+            </CartProvider>
+        </AuthProvider>
+
+    )
 }
 
 function redirectUser(ctx, location) {
-  if (ctx.req) {
-    ctx.res.writeHead(302, {
-      Location: location,
-      "Content-Type": "text/html; charset=utf-8",
-    })
-    ctx.res.end()
-  } else {
-    Router.push(location)
-  }
+    if (ctx.req) {
+        ctx.res.writeHead(302, {
+            Location: location,
+            "Content-Type": "text/html; charset=utf-8",
+        })
+        ctx.res.end()
+    } else {
+        Router.push(location)
+    }
 }
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
-  let pageProps = {}
-  // Checks cookies for authentication
-  const jwt = parseCookies(ctx).jwt
+    let pageProps = {}
+    // Checks cookies for authentication
+    const jwt = parseCookies(ctx).jwt
 
-  if (Component.getInitialProps) {
-    pageProps = await Component.getInitialProps(ctx)
-  }
-
-  // If the user is on the orders page and is not authenticated, then push user to login page.
-  if (!jwt) {
-    if (ctx.pathname === "/orders") {
-      redirectUser(ctx, "/login")
-      //   pathname = "/login"
+    if (Component.getInitialProps) {
+        pageProps = await Component.getInitialProps(ctx)
     }
-  }
 
-  // Fetch global site settings from Strapi
-  const categories = await getCategories()
-  const libraries = await getLibraries()
+    // If the user is on the orders page and is not authenticated, then push user to login page.
+    if (!jwt) {
+        if (ctx.pathname === "/orders") {
+            redirectUser(ctx, "/login")
+            //   pathname = "/login"
+        }
+    }
 
-  // Pass the data to our page via props
-  return {
-    pageProps,
-    categories,
-    libraries,
-  }
+    // Fetch global site settings from Strapi
+    const categories = await getCategories()
+    const libraries = await getLibraries()
+
+    // Pass the data to our page via props
+    return {
+        pageProps,
+        categories,
+        libraries,
+    }
 }
 
 export default MyApp

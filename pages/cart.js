@@ -3,17 +3,18 @@ import styled from "styled-components"
 import { getProducts } from "../utils/api"
 import { CartContext } from "../contexts/CartContext"
 import { useContext, useEffect, useState } from "react"
+import { Container } from "../components/Container"
 
 const Cart = () => {
     const { cart, setCart } = useContext(CartContext)
     const [total, setTotal] = useState(0);
-    //   console.log(items)
+    
     useEffect(() => {
-        let sub = 0;
-        cart.map((x) => {
-            sub = sub + (x.quantity * x.price);
+        let subtotal = 0;
+        cart.map((item) => {
+            subtotal = subtotal + (item.quantity * item.price);
         })
-        setTotal(sub)
+        setTotal(subtotal)
     }, [cart]);
 
     return (
@@ -21,9 +22,8 @@ const Cart = () => {
             <Head>
                 <title>Cart</title>
             </Head>
-            <Wrapper>
+            <Container>
                 {cart.map((item) => {
-                    // console.log(item.quantity*item.price)
                     return (<div
                         key={item.id}
                         className="border rounded-lg bg-gray-100 hover:shadow-lg shadow-md"
@@ -37,7 +37,7 @@ const Cart = () => {
                     </div>)
                 })}
                 <h1>${total}</h1>
-            </Wrapper>
+            </Container>
         </div>
     )
 }

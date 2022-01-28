@@ -1,4 +1,5 @@
 import Head from "next/head"
+import { Home } from "../components/Home"
 import ProductsList from "../components/ProductsList"
 import { getProducts } from "../utils/api"
 
@@ -8,7 +9,8 @@ const HomePage = ({ products }) => {
       <Head>
         <title>Strapi Next.js E-commerce</title>
       </Head>
-      <ProductsList products={products} />
+      {/* <ProductsList products={products} /> */}
+      <Home />
     </div>
   )
 }

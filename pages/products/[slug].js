@@ -1,16 +1,16 @@
+import { useState, useEffect, useContext } from "react"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { marked } from "marked"
-import LoadImage from "../../components/LoadImage"
 import Image from "next/image"
+import Script from "next/script"
+import $ from "jquery"
+import { marked } from "marked"
+import styled from "styled-components"
+
 import { getProducts, getProduct } from "../../utils/api"
 import { getStrapiMedia } from "../../utils/medias"
-import Script from "next/script"
-import styled from "styled-components"
-import $ from "jquery"
-import { tableStyles } from "../../utils/Pages/Products.js"
-import { useState, useEffect, useContext } from "react"
-
+import LoadImage from "../../components/LoadImage"
+import { tableStyles } from "../../utils/page_modules/Products.js"
 import {CartContext} from "../../contexts/CartContext";
 
 const ProductPage = ({ product }) => {
@@ -20,6 +20,7 @@ const ProductPage = ({ product }) => {
     useEffect(() => {
         tableStyles() //imported product scripts
     }, [])
+
     const [quantity, setQuantity] = useState(1)
     const [productImage, setImage] = useState(0)
     const { cart, setCart, addToCartHandler } = useContext(CartContext)
@@ -28,8 +29,6 @@ const ProductPage = ({ product }) => {
     if (router.isFallback) {
         return <div>Loading product...</div>
     }
-
-    
     return (
         <>
             <Head>
@@ -108,17 +107,7 @@ const ProductPage = ({ product }) => {
                         <p className="text-gray-500">{product.attributes.short_desc}</p>
                         <div className="flex py-4 space-x-4">
                             <div className="relative">
-                                {/* <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
-                                    Qty
-                                </div> */}
-                                {/* <div className="h-4">
-                                    <input
-                                        type="number"
-                                        value={quantity}
-                                        className="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1"
-                                        onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                    />
-                                </div> */}
+                                
 
                                 <div className="flex flex-row border h-10 w-24 rounded-lg border-gray-400 relative">
                                     <button  onClick={() => { quantity > 1 ? setQuantity(quantity-1) : setQuantity(1) }} className="font-semibold border-r bg-primary-700 hover:bg-primary-600 text-white border-gray-400 h-full w-20 flex rounded-l focus:outline-none cursor-pointer">
@@ -138,34 +127,7 @@ const ProductPage = ({ product }) => {
                                     <button onClick={() => setQuantity(quantity+1)} className="font-semibold border-l  bg-primary-700 hover:bg-primary-600 text-white border-gray-400 h-full w-20 flex rounded-r focus:outline-none cursor-pointer">
                                         <span className="m-auto">+</span>
                                     </button>
-                                    {/* <div className="absolute flex flex-col p-2 w-32 md:w-full mt-6 md:mt-8 mt-10 flex items-start justify-center">
-                                        <svg
-                                            width="10"
-                                            height="10"
-                                            className="fill-current ml-5 md:mx-auto"
-                                        >
-                                            <polygon points="0 10, 10 10, 5 0" />
-                                        </svg>
-                                        <span className="text-xs block w-48 flex flex-wrap justify-center bg-black p-3 h-auto rounded-lg text-white">
-                                            Input validation message
-                                        </span>
-                                    </div> */}
                                 </div>
-
-                                {/* <svg
-                                    className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                    />
-                                </svg> */}
                             </div>
                             <button
                                 type="button"
@@ -214,13 +176,13 @@ const ProductPage = ({ product }) => {
                     }}
                 ></div>
             </div>
+            <br />
         </>
     )
 }
 export default ProductPage
 export async function getStaticProps({ params }) {
     const product = await getProduct(params.slug)
-    //   console.log(product)
     return { props: { product } }
 }
 export async function getStaticPaths() {

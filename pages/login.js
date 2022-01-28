@@ -1,16 +1,15 @@
 import { useState, useContext } from "react"
 import { setCookie } from "nookies"
-// import getConfig from 'next/config'
 import Router from "next/router"
 import { getStrapiURL } from "../utils/api"
 
 import { AuthContext} from "../contexts/AuthContext"
-// const { publicRuntimeConfig } = getConfig();
 
 function Login() {
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [failedLogin, setFailedLogin] = useState(false)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [failedLogin, setFailedLogin] = useState(false);
+
   const {user, setUser} = useContext(AuthContext);
 
   async function handleLogin(event) {
@@ -19,7 +18,10 @@ function Login() {
       identifier: username,
       password: password,
     }
-
+    
+    /**
+     * Fetches data to authenticate user.
+     */
     const login = await fetch(getStrapiURL("/api/auth/local"), {
       method: "POST",
       headers: {
@@ -28,13 +30,10 @@ function Login() {
       },
       body: JSON.stringify(loginInfo),
     })
+    const loginResponse = await login.json();
 
-    const loginResponse = await login.json()
-    // const { id, username, email } = loginResponse.user
-    console.log(loginResponse)
+    
     if(loginResponse.jwt == null) {
-        // if login credentials are wrong
-        // console.log(loginResponse.data)
         setFailedLogin(true)
         return
     } else {
@@ -43,18 +42,18 @@ function Login() {
             maxAge: 30 * 24 * 60 * 60,
             path: "/",
           })
-          setCookie(null, "user_id", loginResponse.user.id, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: "/",
-          })
-          setCookie(null, "username", loginResponse.user.username, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: "/",
-          })
-          setCookie(null, "user_email", loginResponse.user.email, {
-            maxAge: 30 * 24 * 60 * 60,
-            path: "/",
-          })
+        setCookie(null, "user_id", loginResponse.user.id, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+        })
+        setCookie(null, "username", loginResponse.user.username, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+        })
+        setCookie(null, "user_email", loginResponse.user.email, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+        })
           setUser(loginResponse.user)
     }
     Router.push("/")
