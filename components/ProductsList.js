@@ -1,9 +1,20 @@
 import LoadImage from "./LoadImage"
 import Link from "next/link"
+import { useRouter } from "next/router"
+
 
 import { truncateString } from "../utils/format"
+import { useContext } from "react"
+import { CartContext } from "../contexts/CartContext"
+import { getStrapiMedia } from "../utils/medias"
 
 const ProductsList = ({ products }) => {
+    const {addToCartHandler} = useContext(CartContext);
+    const router = useRouter()
+    if (router.isFallback) {
+        return <div>Loading product...</div>
+    }
+
     // console.log(products)
     {/* <div className="m-6 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-8">
     {products.map((_product) => (
@@ -55,10 +66,26 @@ const ProductsList = ({ products }) => {
                         </div>
                         <p className="text-sm text-gray-700 mt-4">
                             {truncateString(_product.attributes.short_desc, 240)}
+                            {console.log(_product)}
                         </p>
                         <div className="flex items-center justify-end mt-4 top-auto">
                             <button className="bg-white text-red-500 px-4 py-2 rounded mr-auto hover:underline">Compare</button>
-                            <button className=" bg-blue-600 text-gray-200 px-2 py-2 rounded-md ">Add To Cart</button>
+                            <button className="snipcart-add-item bg-secondary-500 hover:bg-secondary-400 text-gray-200 font-bold px-4 py-4"
+                            type="button"
+                            data-item-id={_product.id}
+                            data-item-price={_product.attributes.price}
+                            data-item-url={router.asPath}
+                            data-item-description={_product.attributes.title}
+                            data-item-image={getStrapiMedia(
+                                _product?.image?.formats?.thumbnail?.url
+                            )}
+                            data-item-name={_product.attributes.title}
+                            v-bind="customFields"
+                            data-item-quantity={1}
+                            onClick={() => addToCartHandler(_product.id,1,_product.attributes.title,_product.attributes.price)}
+                        
+                            
+                            >Add To Cart</button>
                         </div>
                     </div>
                 </div>

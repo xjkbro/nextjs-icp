@@ -22,29 +22,14 @@ const ProductPage = ({ product }) => {
     }, [])
     const [quantity, setQuantity] = useState(1)
     const [productImage, setImage] = useState(0)
-    const { cart, setCart } = useContext(CartContext)
+    const { cart, setCart, addToCartHandler } = useContext(CartContext)
 
     const router = useRouter()
     if (router.isFallback) {
         return <div>Loading product...</div>
     }
 
-    const addToCartHandler = (id, qty, name, price) => {
-        // Finds index of item in cart if exists.
-        const foundIndex = cart.findIndex((cartItem) => cartItem.id == id );
-        let newItem = { id, price, name, quantity: qty }
-        // If item is not in cart, add to the cart array
-        // Else get cart to a variable, get item, update item, update cart variable, then update state;
-        if(foundIndex == -1)
-            setCart([...cart, newItem])
-        else {
-            let newCart = [...cart];
-            let updateItem = cart[foundIndex];
-            updateItem.quantity = updateItem.quantity + quantity;
-            newCart[foundIndex] = updateItem;
-            setCart([...newCart])
-        }
-    }
+    
     return (
         <>
             <Head>
