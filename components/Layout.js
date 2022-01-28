@@ -1,20 +1,11 @@
-import CategoryButtons from "./CategoryButtons"
-import LibraryButtons from "./LibraryButtons"
 import Footer from "./Footer"
 import Navbar from "./Navbar"
 
-const Layout = ({ children, categories, libraries }) => {
+const Layout = ({ children }) => {
     return (
         <>
             <Navbar />
-            {/* <div className="flex justify-center bg-gray-200">
-                <div className="max-w-screen-xl flex flex-col min-h-screen w-full">
-                    <CategoryButtons categories={categories} />
-                    <LibraryButtons libraries={libraries} />
-                    <div className="flex-grow">{children}</div>
-                </div>
-            </div> */}
-            {children}
+            <div>{children}</div>
             <div
                 hidden
                 id="snipcart"

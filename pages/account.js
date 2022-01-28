@@ -8,7 +8,7 @@ const Account = ({ orders }) => {
   return (
     <div>
       <Head>
-        <title>Orders</title>
+        <title>Account</title>
       </Head>
       <OrderList orders={orders.data} />
     </div>

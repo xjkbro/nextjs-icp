@@ -17,7 +17,6 @@ const ProductsList = ({ products }) => {
         <div className="">
             {products.map((_product) => (
                 <div key={_product.id} className="md:flex shadow-md hover:shadow-lg mx-6 md:mx-auto my-2 max-w-full md:max-w-full h-48">
-                    {/* <img className="h-full w-full md:w-1/3  object-cover rounded-lg rounded-r-none pb-5/6" src={"https://testing.icpdas-usa.com"+_product?.attributes?.product_imgs?.data[0].attributes.url} alt="bag" /> */}
                     <Link href={`/products/${_product.attributes.slug}`}>
 
                     <a className="h-full w-full md:w-1/4 object-cover rounded-lg rounded-r-none pb-5/6 flex items-center justify-center">

@@ -18,7 +18,7 @@ import Navbar from "../components/Navbar"
 import ScriptImport from "../components/ScriptImport"
 
 
-const MyApp = ({ Component, pageProps, categories, libraries }) => {
+const MyApp = ({ Component, pageProps}) => {
     return (
 
         // Include necessary providers in set order
@@ -26,7 +26,7 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
             <CartProvider>
 
                 {/* Include Layout with necessary props */}
-                <Layout categories={categories} libraries={libraries}>
+                <Layout>
 
                     {/* Default SEO for dynamic SEO */}
                     <DefaultSeo {...SEO} />
@@ -41,6 +41,7 @@ const MyApp = ({ Component, pageProps, categories, libraries }) => {
 
                     {/* Send pageProps to Main Component */}
                     <Component {...pageProps} />
+
                 </Layout>
                 
                 {/* Include any script tags needed. */}
@@ -81,14 +82,14 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     }
 
     // Fetch global site settings from Strapi
-    const categories = await getCategories()
-    const libraries = await getLibraries()
+    // const categories = await getCategories()
+    // const libraries = await getLibraries()
 
     // Pass the data to our page via props
     return {
         pageProps,
-        categories,
-        libraries,
+        // categories,
+        // libraries,
     }
 }
 
